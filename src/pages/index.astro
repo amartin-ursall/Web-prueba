@@ -1,0 +1,497 @@
+
+---
+
+const projects = [
+	{
+		title: 'Sistema de analítica',
+		description: 'Dashboard para visualizar métricas en tiempo real y compartir insights con el equipo.',
+		tags: ['Astro', 'APIs', 'UI accesible'],
+		link: '#'
+	},
+	{
+		title: 'Landing creativa',
+		description: 'Página de lanzamiento con microinteracciones y embudos de conversión claros.',
+		tags: ['UX writing', 'Animaciones', 'Optimización'],
+		link: '#'
+	},
+	{
+		title: 'Portfolio fotográfico',
+		description: 'Galería responsiva con filtros, modo offline y carga progresiva de imágenes.',
+		tags: ['Service workers', 'Performance', 'Diseño visual'],
+		link: '#'
+	}
+];
+
+const skills = ['Diseño de interfaces', 'Prototipado rápido', 'Frontend con Astro', 'Accesibilidad', 'UI Systems', 'Copy & UX writing'];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Portfolio · Andrea Martín</title>
+		<meta
+			name="description"
+			content="Portfolio personal con proyectos de diseño y desarrollo frontend con Astro."
+		/>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;600&display=swap');
+
+			:root {
+				--bg: #f5f7fb;
+				--panel: #ffffff;
+				--accent: #0f766e;
+				--accent-2: #ee6c4d;
+				--text: #0f172a;
+				--muted: #4b5563;
+				--border: #e5e7eb;
+				--shadow: 0 10px 50px rgba(15, 118, 110, 0.12);
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				font-family: 'Source Sans Pro', system-ui, -apple-system, sans-serif;
+				background: radial-gradient(1200px at 20% 20%, rgba(15, 118, 110, 0.08), transparent),
+					radial-gradient(1000px at 80% 0%, rgba(238, 108, 77, 0.08), transparent),
+					var(--bg);
+				color: var(--text);
+				line-height: 1.6;
+				min-height: 100vh;
+			}
+
+			header {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				backdrop-filter: blur(8px);
+				background: rgba(245, 247, 251, 0.7);
+				border-bottom: 1px solid var(--border);
+			}
+
+			nav {
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 18px 20px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 14px;
+			}
+
+			.logo {
+				font-family: 'Space Grotesk', 'Source Sans Pro', sans-serif;
+				font-weight: 700;
+				letter-spacing: -0.02em;
+				color: var(--text);
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.logo span {
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				display: inline-block;
+				background: linear-gradient(130deg, var(--accent), var(--accent-2));
+				box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.1);
+			}
+
+			.nav-links {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.nav-links a {
+				text-decoration: none;
+				color: var(--muted);
+				font-weight: 600;
+				transition: color 0.2s ease, transform 0.2s ease;
+				padding: 6px 10px;
+				border-radius: 10px;
+			}
+
+			.nav-links a:hover {
+				color: var(--text);
+				transform: translateY(-1px);
+				background: rgba(15, 118, 110, 0.08);
+			}
+
+			main {
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 40px 20px 80px;
+				display: grid;
+				gap: 60px;
+			}
+
+			.hero {
+				display: grid;
+				grid-template-columns: 1.1fr 0.9fr;
+				gap: 30px;
+				align-items: center;
+			}
+
+			.hero-card {
+				background: var(--panel);
+				border: 1px solid var(--border);
+				border-radius: 18px;
+				padding: 28px;
+				box-shadow: var(--shadow);
+			}
+
+			h1 {
+				font-family: 'Space Grotesk', 'Source Sans Pro', sans-serif;
+				font-size: clamp(32px, 6vw, 44px);
+				margin: 0 0 14px;
+				line-height: 1.1;
+			}
+
+			.subtitle {
+				color: var(--muted);
+				margin-bottom: 20px;
+				font-size: 18px;
+			}
+
+			.hero-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+				gap: 12px;
+				margin-top: 20px;
+			}
+
+			.badge {
+				background: rgba(15, 118, 110, 0.08);
+				color: var(--accent);
+				border-radius: 14px;
+				padding: 10px 12px;
+				font-weight: 700;
+				font-size: 14px;
+				letter-spacing: 0.01em;
+			}
+
+			.pill {
+				background: #111827;
+				color: #fff;
+				padding: 10px 12px;
+				border-radius: 14px;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 6px;
+			}
+
+			.pill small {
+				opacity: 0.8;
+				font-weight: 500;
+			}
+
+			.actions {
+				display: flex;
+				gap: 12px;
+				flex-wrap: wrap;
+				margin-top: 16px;
+			}
+
+			.button {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 12px 16px;
+				border-radius: 12px;
+				font-weight: 700;
+				text-decoration: none;
+				border: 1px solid transparent;
+				transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+			}
+
+			.button.primary {
+				background: linear-gradient(135deg, var(--accent), #0e9b8f);
+				color: #fff;
+				box-shadow: var(--shadow);
+			}
+
+			.button.secondary {
+				background: var(--panel);
+				color: var(--text);
+				border-color: var(--border);
+			}
+
+			.button:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+			}
+
+			.section-heading {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 16px;
+				gap: 12px;
+			}
+
+			.section-heading h2 {
+				margin: 0;
+				font-family: 'Space Grotesk', 'Source Sans Pro', sans-serif;
+				letter-spacing: -0.01em;
+				font-size: 26px;
+			}
+
+			.section-heading span {
+				color: var(--muted);
+				font-size: 15px;
+			}
+
+			.card-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 18px;
+			}
+
+			.card {
+				background: var(--panel);
+				border: 1px solid var(--border);
+				border-radius: 16px;
+				padding: 18px;
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+				transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+			}
+
+			.card:hover {
+				transform: translateY(-2px);
+				border-color: rgba(15, 118, 110, 0.35);
+				box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+			}
+
+			.card h3 {
+				margin: 0 0 8px;
+				font-size: 20px;
+			}
+
+			.card p {
+				margin: 0 0 12px;
+				color: var(--muted);
+			}
+
+			.tag {
+				display: inline-block;
+				margin: 4px 8px 4px 0;
+				padding: 6px 10px;
+				border-radius: 12px;
+				background: rgba(15, 118, 110, 0.08);
+				color: var(--accent);
+				font-weight: 700;
+				font-size: 13px;
+			}
+
+			.link {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				color: var(--text);
+				text-decoration: none;
+				font-weight: 700;
+			}
+
+			.link:hover {
+				color: var(--accent-2);
+			}
+
+			.skills {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.skill {
+				padding: 10px 12px;
+				border-radius: 12px;
+				border: 1px dashed var(--border);
+				background: rgba(15, 118, 110, 0.04);
+				color: var(--text);
+				font-weight: 600;
+			}
+
+			.contact {
+				display: grid;
+				grid-template-columns: 2fr 1fr;
+				gap: 20px;
+				align-items: center;
+			}
+
+			.contact-card {
+				background: var(--panel);
+				border: 1px solid var(--border);
+				border-radius: 16px;
+				padding: 20px;
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+			}
+
+			.contact-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+				gap: 12px;
+			}
+
+			.info {
+				background: rgba(238, 108, 77, 0.08);
+				border-radius: 12px;
+				padding: 12px;
+				font-weight: 700;
+				color: var(--text);
+			}
+
+			footer {
+				max-width: 1100px;
+				margin: 0 auto 30px;
+				padding: 0 20px;
+				color: var(--muted);
+				font-size: 14px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+			}
+
+			footer a {
+				color: var(--text);
+				text-decoration: none;
+				font-weight: 700;
+			}
+
+			@media (max-width: 900px) {
+				.hero {
+					grid-template-columns: 1fr;
+				}
+
+				.contact {
+					grid-template-columns: 1fr;
+				}
+
+				header {
+					position: static;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<div class="logo">
+					<span></span>
+					<div>Andrea Martín · Portfolio</div>
+				</div>
+				<div class="nav-links">
+					<a href="#acerca">Acerca</a>
+					<a href="#proyectos">Proyectos</a>
+					<a href="#contacto">Contacto</a>
+				</div>
+			</nav>
+		</header>
+
+		<main>
+			<section class="hero" id="acerca">
+				<div class="hero-card">
+					<h1>Diseño y construyo experiencias digitales limpias y con propósito.</h1>
+					<p class="subtitle">
+						Soy Andrea Martín, diseñadora y frontend. Combino narrativa, sistemas de diseño y desarrollo con Astro para
+						crear interfaces veloces, accesibles y con carácter.
+					</p>
+					<div class="actions">
+						<a class="button primary" href="#proyectos">Ver proyectos</a>
+						<a class="button secondary" href="mailto:hola@andreamartin.studio">Escríbeme</a>
+					</div>
+					<div class="hero-grid">
+						<div class="badge">+40 entregas a clientes</div>
+						<div class="pill">
+							<span>⚡</span> Microinteracciones <small>que comunican</small>
+						</div>
+						<div class="pill" style="background: #0f766e;"> <span>✨</span> Astro lover <small>rendimiento A+</small></div>
+						<div class="badge" style="background: rgba(238, 108, 77, 0.12); color: var(--accent-2);">Estrategia primero</div>
+					</div>
+				</div>
+				<div class="hero-card">
+					<div class="section-heading">
+						<h2>Habilidades</h2>
+						<span>Balance entre diseño y código</span>
+					</div>
+					<div class="skills">
+						{skills.map((item) => (
+							<span class="skill">{item}</span>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section id="proyectos">
+				<div class="section-heading">
+					<h2>Proyectos destacados</h2>
+					<span>Selección reciente</span>
+				</div>
+				<div class="card-grid">
+					{projects.map((project) => (
+						<article class="card">
+							<h3>{project.title}</h3>
+							<p>{project.description}</p>
+							<div>
+								{project.tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+							<a class="link" href={project.link}>
+								Ver detalle &rarr;
+							</a>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section id="contacto" class="contact">
+				<div class="contact-card">
+					<div class="section-heading">
+						<h2>¿Hablamos?</h2>
+						<span>Respondo en 24h</span>
+					</div>
+					<p class="subtitle">
+						Abierta a colaborar en lanzamientos rápidos, auditorías UX y creación de sistemas de diseño listos para escalar.
+					</p>
+					<div class="contact-grid">
+						<div class="info">📧 hola@andreamartin.studio</div>
+						<div class="info">🌍 Remoto desde Madrid</div>
+						<div class="info">🤝 Proyectos y asesorías</div>
+					</div>
+					<div class="actions" style="margin-top: 18px;">
+						<a class="button primary" href="mailto:hola@andreamartin.studio">Agendar llamada</a>
+						<a class="button secondary" href="#proyectos">Ver más trabajos</a>
+					</div>
+				</div>
+				<div class="hero-card">
+					<div class="section-heading">
+						<h2>Formato de trabajo</h2>
+						<span>Claro y a ritmo</span>
+					</div>
+					<ul style="margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.8;">
+						<li>Workshops cortos para definir la apuesta de valor.</li>
+						<li>Wireframes de baja fidelidad antes de pasar a UI.</li>
+						<li>Componentes accesibles y documentados.</li>
+						<li>Implementación en Astro con rendimiento de Lighthouse 90+.</li>
+					</ul>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<span>Hecho con Astro y mucho café.</span>
+			<a href="mailto:hola@andreamartin.studio">Contactar</a>
+		</footer>
+	</body>
+</html>
